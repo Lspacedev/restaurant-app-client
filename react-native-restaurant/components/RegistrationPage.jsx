@@ -2,26 +2,35 @@ import React from 'react';
 import { StyleSheet, TextInput, Text, TouchableOpacity, Button, View, Alert,Image } from 'react-native';
 
 export default function RegistrationPage(){
+  const [name, setName] = useState();
+  const [email, seEmail] = useState();
+  const [password, setPassword] = useState();
 
     return(
         <div>
             <View style={styles.container}>
-       <Image
+       {/* <Image
         source={require('../assets/images/food-plate.jpg')}
         style={{ width: 350, height: 300, marginBottom: 35 , borderRadius:400/ 2}}
-      />
+      /> */}
             <h1>Registration</h1>
             <TextInput
       style={styles.input}
       placeholder="Username"
-      //value={data.email}
+      value={name}
+      onChangeText={(value) => handleInput('name', value)}
+    />
+    <TextInput
+      style={styles.input}
+      placeholder="email"
+      value={email}
       onChangeText={(value) => handleInput('email', value)}
-      keyboardType="email-address"
+      secureTextEntry
     />
     <TextInput
       style={styles.input}
       placeholder="Password"
-      //value={data.password}
+      value={password}
       onChangeText={(value) => handleInput('password', value)}
       secureTextEntry
     />
