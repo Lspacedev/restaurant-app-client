@@ -1,10 +1,18 @@
 import React from 'react';
 import { StyleSheet, TextInput, Text, TouchableOpacity, Button, View, Alert,Image } from 'react-native';
+import axios from 'axios';
 
 export default function RegistrationPage(){
   const [name, setName] = useState();
   const [email, seEmail] = useState();
   const [password, setPassword] = useState();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post('', {name, email, password})
+    .then(result => console.log(result))
+    .catch(err => console.log(err))
+  }
 
     return(
         <div>
@@ -34,7 +42,7 @@ export default function RegistrationPage(){
       onChangeText={(value) => handleInput('password', value)}
       secureTextEntry
     />
-    {/* <Button title="Sign Up" onPress={handleSubmit} /> */}
+    <Button title="Sign Up" onPress={handleSubmit} />
     <p>Forgot password</p>
     <Text>New user:</Text>
       <TouchableOpacity onPress={() => navigation.navigate('RegistrationPage')}>
