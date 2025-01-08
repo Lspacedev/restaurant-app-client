@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const RegisterModel = require('./models/Register')
+const RegisterModel = require('./models/Register');
+const UserModel = require('./models/User');
 
 const app = express()
 app.use(cors())
@@ -21,6 +22,22 @@ app.post('/register', (req, res) => {
             .catch(err => res.json(err))
         }
     }).catch(err => res.json(err))
+})
+
+app.post("/login", (req, res) =>{
+    const {email, password} = req.body;
+    UserModel.findOne({email: email})
+    .then(user => {
+        if(user){
+            if(user.password === password){
+                res.json("Login successful")
+            } else{
+                res.json("The password is incorrect")
+            }
+        } else{
+            res.json("No record")
+        }
+    })
 })
 
 app.listen(3001, () => {

@@ -1,8 +1,18 @@
 import React from 'react';
 import { StyleSheet, TextInput, Text, Button, View, Alert,Image, Pressable } from 'react-native';
 import { Link } from 'expo-router';
+import axios from 'axios';
 
 export default function LoginPage(){
+  const [name, setName] = useState();
+  const [email, seEmail] = useState();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post('http://localhost:3001/login', {email, password})
+    .then(result => console.log(result))
+    .catch(err => console.log(err))
+  }
 
     return(
         <div>
