@@ -12,7 +12,7 @@ export default function RootLayout() {
     <div>
       <LoginPage/>
       <Stack>
-        <Stack.Screen name='LoginPage'/>
+        {/* <Stack.Screen name='LoginPage'/> */}
         <Stack.Screen name='RegistrationPage'/>
       </Stack>
     </div>
