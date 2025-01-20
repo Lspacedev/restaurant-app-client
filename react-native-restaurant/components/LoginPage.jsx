@@ -20,9 +20,6 @@ export default function LoginPage() {
         source={require('../assets/images/food-plate.jpg')}
         style={{ width: 350, height: 300, marginBottom: 35, borderRadius: 200 }}
       />
-       <Pressable>
-       <Link href="../components/RegistrationPage"  style={{ color: '#FFFFFF', fontSize: 16, fontWeight: 'bold', marginTop: 10 }}>Sign up</Link>
-     </Pressable>
       <Text style={styles.title}>Login</Text>
       <TextInput
         style={styles.input}
@@ -38,17 +35,20 @@ export default function LoginPage() {
         onChangeText={(value) => setPassword(value)}
         secureTextEntry
       />
-      <Text style={styles.link}>Forgot password</Text>
+      <Pressable style={styles.button} onPress={handleSubmit}>
+        <Text style={styles.buttonText}>Login</Text>
+      </Pressable>
+      <Text style={styles.link}>Forgot password?</Text>
       <Text style={styles.newUser}>New user?</Text>
       <Link href="/RegistrationPage" style={styles.signup}>
         Sign up
       </Link>
+      {/* <Link href="/RegistrationPage" style={styles.signup}>
+        Sign up
+      </Link>
       <Pressable>
        <Link href="../components/RegistrationPage.jsx"  style={{color:"#FFFFFF"}}>Sign up</Link>
-     </Pressable>
-     <Pressable>
-       <Link href="/RegistrationPage"  style={{ color: '#FFFFFF', fontSize: 16, fontWeight: 'bold', marginTop: 10, marginBottom:15 }}>Sign up</Link>
-     </Pressable>
+     </Pressable> */}
     </View>
   );
 }

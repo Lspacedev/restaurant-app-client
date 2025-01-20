@@ -20,15 +20,15 @@ export default function HomePage() {
         const response = await axios.get("http://localhost:3001/restaurants"); // Replace with your API endpoint
         setRestaurant(response.data);
       } catch (error) {
-        console.error("Error fetching rooms:", error);
+        console.error("Error fetching restaurants:", error);
         Alert.alert("Error", "Unable to fetch restaurants.");
       }
     };
-    fetchRooms();
+    fetchRestaurant();
   }, []);
 
   // Render each room as a grid item
-  const renderRoom = ({ item }) => (
+  const renderRestaurant = ({ item }) => (
     <View style={styles.card}>
       <Image 
         source={{ uri: item.img || "https://via.placeholder.com/150" }} 
@@ -59,9 +59,9 @@ export default function HomePage() {
   return (
     <View style={styles.container}>
       <FlatList
-        data={rooms}
+        data={restaurant}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={renderRoom}
+        renderItem={renderRestaurant}
         numColumns={2} // Display items in two columns
         contentContainerStyle={styles.grid}
       />

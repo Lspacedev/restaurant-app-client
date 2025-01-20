@@ -1,10 +1,8 @@
-
-import { useEffect } from 'react';
 import 'react-native-reanimated';
 import RegistrationPage from '../components/RegistrationPage';
 import LoginPage from '../components/LoginPage';
+import HomePage from '@/components/HomePage';
 import {Stack} from 'expo-router';
-import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View } from 'react-native';
 
@@ -14,11 +12,10 @@ export default function RootLayout() {
   const Stack = createNativeStackNavigator();
 
   return (
-    
-      <Stack.Navigator>
-      <Stack.Screen name="LoginPage" component={LoginPage} />
-        <Stack.Screen name="RegistrationPage" component={RegistrationPage}/>
-      </Stack.Navigator>
+    <RegistrationPage/>
+      // <Stack.Screen name="LoginPage"  />
+      //   <Stack.Screen name="RegistrationPage" />
+      
     
    );
 }
@@ -26,3 +23,5 @@ export default function RootLayout() {
 function RootLayoutNav() {
   
 }
+// component={LoginPage}
+// component={RegistrationPage}
