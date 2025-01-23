@@ -9,7 +9,7 @@ export default function LoginPage() {
 
   const handleSubmit = () => {
     axios
-      .post('http://localhost:3001/login', { email, password })
+      .post('http://localhost:3001 /api/login', { email, password })
       .then((result) => console.log(result))
       .catch((err) => console.log(err));
   };

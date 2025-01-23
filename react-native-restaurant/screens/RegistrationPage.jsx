@@ -10,10 +10,12 @@ export default function RegistrationPage(){
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3001/register', {name, email, password})
+    axios.post('http://localhost:3001/api/register', {name, email, password})
     .then(result => console.log(result))
     .catch(err => console.log(err))
   }
+
+  // axios.post('http://localhost:3001/register', {name, email, password})
 
     return(
         <div>
