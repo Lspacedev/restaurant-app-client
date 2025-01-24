@@ -1,42 +1,82 @@
-import React from 'react';
-import {View, FlatList, StyleSheet, Text, StatusBar} from 'react-native';
-import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
-import * as NavigationBar from 'expo-navigation-bar';
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  FlatList,
+  StyleSheet,
+  Text,
+  StatusBar,
+  Image,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import axios from "axios";
 
+const App = () => {
+  const [restaurants, setRestaurants] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); 
 
+  useEffect(() => {
+    const fetchRestaurants = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/restaurants"); 
+        setRestaurants(response.data);
+      } catch (err) {
+        console.error("Error fetching restaurants:", err);
+        setError("Unable to fetch restaurants.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchRestaurants();
+  }, []);
 
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'Restaurant One',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Restaurant Two',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Restaurant Three',
-  },
-];
+  const Item = ({ name, imageUrl, days, hours }) => (
+    <View style={styles.item}>
+      {imageUrl && <Image source={{ uri: imageUrl }} style={styles.image} />}
+      <Text style={styles.title}>{name}</Text>
+      <Text style={styles.details}>Days: {days}</Text>
+      <Text style={styles.details}>Hours: {hours}</Text>
+    </View>
+  );
 
-const Item = ({title}) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
-  </View>
-);
+  if (loading) {
+    return (
+      <View style={styles.loader}>
+        <ActivityIndicator size="large" color="#FF4C52" />
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
-const App = () => (
-  <SafeAreaProvider>
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={DATA}
-        renderItem={({item}) => <Item title={item.title} />}
-        keyExtractor={item => item.id}
-      />
-    </SafeAreaView>
-  </SafeAreaProvider>
-);
+  if (error) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
+    );
+  }
+
+  return (
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <FlatList
+          data={restaurants}
+          renderItem={({ item }) => (
+            <Item
+              name={item.name}
+              imageUrl={item.imageUrl}
+              days={item.days}
+              hours={item.hours}
+            />
+          )}
+          keyExtractor={(item) => item._id}
+        />
+      </SafeAreaView>
+    </SafeAreaProvider>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -44,13 +84,41 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0,
   },
   item: {
-    backgroundColor: '#FF4C52',
+    backgroundColor: "#FF4C52",
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
+    borderRadius: 10,
+  },
+  image: {
+    width: "100%",
+    height: 200,
+    borderRadius: 10,
+    marginBottom: 10,
   },
   title: {
-    fontSize: 32,
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  details: {
+    fontSize: 16,
+    color: "#fff",
+  },
+  loader: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorText: {
+    color: "#FF4C52",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
 
@@ -58,70 +126,74 @@ export default App;
 
 
 
-// import React from "react";
-// import { StyleSheet, TextInput, Text, View, Alert, Image,Pressable } from 'react-native';import { StyleSheet, TextInput, Text, View, Alert, Image,Pressable } from 'react-native';
+// import React from 'react';
+// import {View, FlatList, StyleSheet, Text, StatusBar} from 'react-native';
+// import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
+// import * as NavigationBar from 'expo-navigation-bar';
 
-// export default function HomePage(){
-//     return (
-//         <View style={styles.app}>
-//           <Row>
-//           <Col numRows={2}>
-//           <Image
-//         source={require('../assets/images/food-plate.jpg')}
-//         style={{ width: 350, height: 300, marginBottom: 35 , borderRadius:400/ 2}}
+
+
+// const DATA = [
+//   {
+//     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+//     title: 'Restaurant One',
+//   },
+//   {
+//     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+//     title: 'Restaurant Two',
+//   },
+//   {
+//     id: '58694a0f-3da1-471f-bd96-145571e29d72',
+//     title: 'Restaurant Three',
+//   },
+// ];
+
+//  useEffect(() => {
+//     const fetchRestaurant = async () => {
+//       try {
+//         const response = await axios.get("http://localhost:3001/restaurants");
+//         setRestaurant(response.data);
+//       } catch (error) {
+//         console.error("Error fetching restaurants:", error);
+//         Alert.alert("Error", "Unable to fetch restaurants.");
+//       }
+//     };
+//     fetchRestaurant();
+//   }, [])
+
+
+// const Item = ({title}) => (
+//   <View style={styles.item}>
+//     <Text style={styles.title}>{title}</Text>
+//   </View>
+// );
+
+// const App = () => (
+//   <SafeAreaProvider>
+//     <SafeAreaView style={styles.container}>
+//       <FlatList
+//         data={DATA}
+//         renderItem={({item}) => <Item title={item.title} />}
+//         keyExtractor={item => item.id}
 //       />
-//           <Text>First column</Text>
-//         </Col>
-//         <Col numRows={2}>
-//           <Text>Second column</Text>
-//         </Col>
-//       </Row>
-//       <Row>
-//         <Col numRows={1}>
-//           <Text>First column</Text>
-//         </Col>
-//         <Col numRows={3}>
-//           <Text>Second Column</Text>
-//         </Col>
-//           </Row>
-//         </View>
-//       );
-// }
+//     </SafeAreaView>
+//   </SafeAreaProvider>
+// );
 
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     marginTop: StatusBar.currentHeight || 0,
+//   },
+//   item: {
+//     backgroundColor: '#FF4C52',
+//     padding: 20,
+//     marginVertical: 8,
+//     marginHorizontal: 16,
+//   },
+//   title: {
+//     fontSize: 32,
+//   },
+// });
 
-// const styles = {
-//     app: {
-//     flex: 4,
-//     marginHorizontal: "auto",
-//     width: 400,
-//     backgroundColor: "red"
-//   },
-//   row: {
-//     flexDirection: "row"
-//   },
-//   "1col":  {
-//     backgroundColor:  "lightblue",
-//     borderColor:  "#fff",
-//     borderWidth:  1,
-//     flex:  1
-//   },
-//   "2col":  {
-//     backgroundColor:  "green",
-//     borderColor:  "#fff",
-//     borderWidth:  1,
-//     flex:  2
-//   },
-//   "3col":  {
-//     backgroundColor:  "orange",
-//     borderColor:  "#fff",
-//     borderWidth:  1,
-//     flex:  3
-//   },
-//   "4col":  {
-//     flex:  4
-//   }
-// };
-
-// const Row = ({ children }) => (
-//     <View style={styles.row}>{children}</View>
-//   )
+// export default App;

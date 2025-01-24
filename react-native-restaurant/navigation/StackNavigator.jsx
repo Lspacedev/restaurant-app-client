@@ -10,7 +10,7 @@ export default function StackNavigator() {
   console.log("stack");
   return (
     <Stack.Navigator>
-      <Stack.Screen name="../app/(tabs)/_layout.tsx" component={HomePage} />
+      {/* <Stack.Screen name="../app/(tabs)/_layout.tsx" component={HomePage} /> */}
         <Stack.Screen name="HomePage" component={HomePage} />
       <Stack.Screen name="RegistrationPage" component={RegistrationPage} />
       <Stack.Screen name="LoginPage" component={LoginPage} />
