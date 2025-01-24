@@ -8,7 +8,7 @@ const RestaurantList = () => {
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/restaurants');
+        const response = await axios.get('https://restaurant-app-backend-sandy.vercel.app/');
         setRestaurants(response.data);
       } catch (error) {
         console.error('Error fetching restaurants:', error);

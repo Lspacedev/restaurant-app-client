@@ -13,7 +13,7 @@ const BookingForm = ({ restaurantId }) => {
     try {
       const token = localStorage.getItem('authToken');
       const response = await axios.post(
-        `http://localhost:5000/api/restaurants/${restaurantId}/bookings`,
+        `https://restaurant-app-backend-sandy.vercel.app/${restaurantId}/bookings`,
         { day, hour, guest: guests },
         { headers: { Authorization: `Bearer ${token}` } }
       );
