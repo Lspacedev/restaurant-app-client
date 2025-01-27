@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export default function RegistrationPage(){
   const [name, setName] = useState();
-  const [email, seEmail] = useState();
+  const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
   const handleSubmit = (e) => {
@@ -27,20 +27,22 @@ export default function RegistrationPage(){
       style={styles.input}
       placeholder="Username"
       value={name}
-      onChangeText={(value) => handleInput('name', value)}
+      onChangeText={setName}
+      // onChangeText={(value) => handleInput('name', value)}
     />
     <TextInput
       style={styles.input}
       placeholder="email"
       value={email}
-      onChangeText={(value) => handleInput('email', value)}
-      secureTextEntry
+      onChangeText={setEmail}
+      // onChangeText={(value) => handleInput('email', value)}
     />
     <TextInput
       style={styles.input}
       placeholder="Password"
       value={password}
-      onChangeText={(value) => handleInput('password', value)}
+      onChangeText={setPassword}
+      // onChangeText={(value) => handleInput('password', value)}
       secureTextEntry
     />
     <TouchableOpacity style={styles.button} onPress={handleSubmit}>
