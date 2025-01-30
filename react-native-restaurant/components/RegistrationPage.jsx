@@ -1,63 +1,75 @@
 import {useState} from 'react';
-import { StyleSheet, TextInput, Text, TouchableOpacity, Button, View, Alert,Image } from 'react-native';
+import { StyleSheet, TextInput, Text, TouchableOpacity, Button, View, Alert, Image, ScrollView, StatusBar } from 'react-native';
+import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
 import axios from 'axios';
 
 export default function RegistrationPage(){
   const [name, setName] = useState();
+  const [surname, setSurname] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [role, setRole] = useState();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('https://restaurant-app-backend-sandy.vercel.app/register', {name, email, password})
+    axios.post('https://restaurant-app-backend-sandy.vercel.app/register', {name, surname, email, password, role})
     .then(result => console.log(result))
     .catch(err => console.log(err))
   }
 
     return(
-        <div>
-            <View style={styles.container}>
-       <Image
-        source={require('../assets/images/food-plate.jpg')}
-        style={{ width: 350, height: 300, marginBottom: 35 , borderRadius:400/ 2}}
-      />
-            <h1>Registration</h1>
-            <TextInput
-      style={styles.input}
-      placeholder="Username"
-      value={name}
-      onChangeText={setName}
-      // onChangeText={(value) => handleInput('name', value)}
-    />
-    <TextInput
-      style={styles.input}
-      placeholder="email"
-      value={email}
-      onChangeText={setEmail}
-      // onChangeText={(value) => handleInput('email', value)}
-    />
-    <TextInput
-      style={styles.input}
-      placeholder="Password"
-      value={password}
-      onChangeText={setPassword}
-      // onChangeText={(value) => handleInput('password', value)}
-      secureTextEntry
-    />
-    <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Submit</Text>
-      </TouchableOpacity>
-      <Link href="../components//LoginPage.jsx" style={styles.linkText}>Already have an account? Log In</Link>
-      {/* <TouchableOpacity onPress={() => navigation.navigate('LoginPage')}>
-        <Text style={styles.linkText}>Already have an account? Log In</Text>
-      </TouchableOpacity> */}
-    {/* <Button title="yes" onPress={handleSubmit} />
-      <TouchableOpacity onPress={() => navigation.navigate('RegistrationPage')}>
-        <Text style={styles.linkText}>Sign Up</Text>
-      </TouchableOpacity> */}
-            </View>
-        </div>
+      <SafeAreaProvider>
+      <SafeAreaView style={styles.container} edges={['top']}>
+        <ScrollView style={styles.scrollView}>
+         <Image
+ source={require('../assets/images/food-plate.jpg')}
+ style={{ width: 350, height: 300, marginBottom: 35 , borderRadius:400/ 2}}
+ />
+   <h1>Registration</h1>
+   <TextInput
+ style={styles.input}
+ placeholder="Name"
+ value={name}
+ onChangeText={setName}
+ // onChangeText={(value) => handleInput('name', value)}
+ />
+ <TextInput
+ style={styles.input}
+ placeholder="Surname"
+ value={surname}
+ onChangeText={setSurname}
+ // onChangeText={(value) => handleInput('name', value)}
+ />
+ <TextInput
+ style={styles.input}
+ placeholder="email"
+ value={email}
+ onChangeText={setEmail}
+ // onChangeText={(value) => handleInput('email', value)}
+ />
+ <TextInput
+ style={styles.input}
+ placeholder="Password"
+ value={password}
+ onChangeText={setPassword}
+ // onChangeText={(value) => handleInput('password', value)}
+ secureTextEntry
+ />
+ <TextInput
+ style={styles.input}
+ placeholder="Role"
+ value={role}
+ onChangeText={setRole}
+  //onChangeText={(value) => handleInput('name', value)}
+ />
+ <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+ <Text style={styles.buttonText}>Submit</Text>
+ </TouchableOpacity>
+ <Link href="../components//LoginPage.jsx" style={styles.linkText}>Already have an account? Log In</Link>
+        </ScrollView>
+      </SafeAreaView>
+    </SafeAreaProvider>
     )
 }
 
