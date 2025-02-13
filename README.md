@@ -6,4 +6,10 @@ https://www.figma.com/design/Eer26qnAZHm183H81sF8a6/Restaurant-App-Design?node-i
 How to run app:
 npx expo start
 
+Packages:
+Axios
+React navgation/native
+Stripe
+Splash Screen
+
 
